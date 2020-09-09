@@ -1,7 +1,7 @@
 # AppiumParallelAutomationFramework
 This repo contain appium framework using parallel technique for both android and ios in a single framework
 
-## Appium Setup on MAC
+## Appium Setup on MAC for IOS
 1. install homebrew ( package manager for macOS and is used to install software packages
 2. Install appium ( either through npm or appium desktop)
 NPM:
