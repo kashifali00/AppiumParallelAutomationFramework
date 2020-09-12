@@ -1,24 +1,25 @@
 package com.qa.tests;
 
-import com.google.gson.JsonObject;
 import com.qa.BaseTest;
 import com.qa.pages.AutoScoutDashboardPage;
 import com.qa.pages.AutoScouteLoginPage;
+import com.qa.pages.EasyPaisaDashboardPage;
+import com.qa.pages.EasyPaisaLoginPage;
 import com.qa.utils.TestUtils;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-import org.testng.Assert;
 import org.testng.annotations.*;
 
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 
-public class LoginPageTest {
-    AutoScouteLoginPage loginPage;
-    AutoScoutDashboardPage dashboardPage;
+public class EasyPaisaLoginPageTest {
+
+    EasyPaisaDashboardPage dashboardPage;
+    EasyPaisaLoginPage loginPage;
     BaseTest objBaseTest;
-    JSONObject userLogins;
+    JSONObject msisdn;
     InputStream datafile;
     InputStream stringIS;
     HashMap<String , String> stringHashMap;
@@ -37,7 +38,7 @@ public class LoginPageTest {
             String dataFilepath = "data/loginUser.json";
             datafile = getClass().getClassLoader().getResourceAsStream(dataFilepath);
             JSONTokener tokener = new JSONTokener(datafile);
-            userLogins = new JSONObject(tokener);
+            msisdn = new JSONObject(tokener);
         }catch (Exception e){
             e.printStackTrace();
             throw e;
@@ -58,23 +59,15 @@ public class LoginPageTest {
     @BeforeMethod
     public void beforeMethod(Method m){
         System.out.println("***** Executing BeforeMethod "+m.getName()+"*****");
-        loginPage = new AutoScouteLoginPage();
-        dashboardPage = new AutoScoutDashboardPage();
-        loginPage = new AutoScouteLoginPage();
+        dashboardPage = new EasyPaisaDashboardPage();
+        loginPage = new EasyPaisaLoginPage();
     }
 
     @Test
-    public void loginWithValidCredentials() throws Exception{
-        loginPage = dashboardPage.clickOnNavigateUpButton();
-        loginPage.clickLogin();
-        loginPage.sendUserName(userLogins.getJSONObject("validUser").getString("username"));
-        loginPage.sendPassword(userLogins.getJSONObject("validUser").getString("password"));
-        loginPage.clickLoginButton();
-        Thread.sleep(4000);
-        dashboardPage.clickOnNavigateUpButton();
-        objBaseTest.softAssert.assertEquals(loginPage.getLoggedUserName("text"), stringHashMap.get("logged_user_name"));
+    public void enterMsisdn(){
+        objBaseTest.softAssert.assertEquals(loginPage.checkWelcomeText("label"), stringHashMap.get("welcome Text"));
+        loginPage.enterMSISDN(msisdn.getJSONObject("validMSISDN").getString("msisdn"));
+        dashboardPage = loginPage.clickOnProceedButton();
         objBaseTest.softAssert.assertAll();
     }
 }
-
-

@@ -3,6 +3,7 @@ package com.qa;
 import com.qa.utils.TestUtils;
 import io.appium.java_client.*;
 import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -21,7 +22,7 @@ public class BaseTest {
     public SoftAssert softAssert = new SoftAssert();
     InputStream inputStream;
     URL appiumURL;
-    File appURL;
+    File androidAppURL,iOSAppURL;
 
 
     // Constructor used here to initialize the page factory class
@@ -47,24 +48,39 @@ public class BaseTest {
             String propsFileName = "config.properties";
             inputStream = getClass().getClassLoader().getResourceAsStream(propsFileName);
             props.load(inputStream);
-            appURL = new File(props.getProperty("androidAppLocation"));
+            androidAppURL = new File(props.getProperty("androidAppLocation"));
+            iOSAppURL = new File(props.getProperty("iOSAppLocation"));
             cap.setCapability("platformName", platformName);
             cap.setCapability("platformVersion", platformVersion);
             cap.setCapability("deviceName",deviceName);
-            cap.setCapability("automationName", props.getProperty("automationName"));
-            cap.setCapability("app", appURL.getAbsolutePath());
-            cap.setCapability("appPackage",props.getProperty("appPackage"));
-            cap.setCapability("appActivity",props.getProperty("appActivity"));
-            cap.setCapability("newCommandTimeout", TestUtils.newCommandTimeoutWait);
-            cap.setCapability("appWaitDuration", TestUtils.appDurationTimeoutWait);
-            cap.setCapability("fullReset","true");
 
+            switch (platformName){
+                case "Android":
+                    cap.setCapability("automationName", props.getProperty("androidAutomationName"));
+                    cap.setCapability("app", androidAppURL.getAbsolutePath());
+                    cap.setCapability("appPackage",props.getProperty("appPackage"));
+                    cap.setCapability("appActivity",props.getProperty("appActivity"));
+                    cap.setCapability("newCommandTimeout", TestUtils.newCommandTimeoutWait);
+                    cap.setCapability("appWaitDuration", TestUtils.appDurationTimeoutWait);
+                    cap.setCapability("fullReset","true");
+                    appiumURL = new URL(props.getProperty("appiumServerURL"));
+                    appiumDrv = new AndroidDriver<MobileElement>(appiumURL, cap);
+                    break;
 
-            appiumURL = new URL(props.getProperty("appiumServerURL"));
-            appiumDrv = new AndroidDriver<MobileElement>(appiumURL, cap);
+                case "iOS":
+                    cap.setCapability("automationName", props.getProperty("iOSAutomationName"));
+                    cap.setCapability("app", iOSAppURL.getAbsolutePath());
+                    cap.setCapability("bundleId",props.getProperty("appBundleId"));
+                    cap.setCapability("udid",props.getProperty("udid"));
+                    appiumURL = new URL(props.getProperty("appiumServerURL"));
+                    appiumDrv = new IOSDriver<MobileElement>(appiumURL, cap);
+                    break;
+
+                default:
+                    throw new Exception("Invalid platformName - "+platformName);
+
+            }
             appiumDrv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
-
     }
 
     // web driver wait method

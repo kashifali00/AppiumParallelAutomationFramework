@@ -17,5 +17,9 @@
   "invalidUsernameEmail": {
     "username": "kashifali@gmail.com",
     "password": "Pas@123"
+  },
+
+  "validMSISDN": {
+    "msisdn": "03339829007"
   }
 }

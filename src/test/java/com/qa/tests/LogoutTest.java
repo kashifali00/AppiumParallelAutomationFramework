@@ -43,6 +43,7 @@ public class LogoutTest {
 
         }catch (Exception e){
             e.printStackTrace();
+            throw e;
         }finally {
             if(datafile != null){
                 datafile.close();

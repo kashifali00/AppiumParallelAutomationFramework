@@ -33,6 +33,7 @@ public class AutoScouteDashboardTest  {
             stringHashMap = utils.parseStringXML(stringsIS);
         }catch (Exception e){
             e.printStackTrace();
+            throw e;
         }finally {
             if(stringsIS != null){
                 stringsIS.close();
