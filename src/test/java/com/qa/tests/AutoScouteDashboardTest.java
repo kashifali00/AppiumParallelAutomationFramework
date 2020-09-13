@@ -21,12 +21,12 @@ public class AutoScouteDashboardTest  {
     InputStream stringsIS;
     TestUtils utils;
 
-    @Parameters({"platformName","platformVersion", "deviceName"})
+    @Parameters({"emulator","udid","platformName","platformVersion", "deviceName"})
     @BeforeClass
-    public void beforeClass(String platformName, String platformVersion, String deviceName) throws Exception{
+    public void beforeClass(String emulator,String udid,String platformName, String platformVersion, String deviceName) throws Exception{
         try {
             objBaseClass = new BaseTest();
-            objBaseClass.driverSetup(platformName, platformVersion, deviceName);
+            objBaseClass.driverSetup(emulator,udid,platformName, platformVersion, deviceName);
             String xmlFilePath = "strings/string.xml";
             stringsIS = getClass().getClassLoader().getResourceAsStream(xmlFilePath);
             utils = new TestUtils();

@@ -25,12 +25,12 @@ public class EasyPaisaLoginPageTest {
     HashMap<String , String> stringHashMap;
     TestUtils utils;
 
-    @Parameters({"platformName","platformVersion","deviceName"})
+    @Parameters({"emulator","udid","platformName","platformVersion","deviceName"})
     @BeforeClass
-    public void beforeClass(String platformName, String platformVersion, String deviceName) throws Exception{
+    public void beforeClass(String emulator,String udid, String platformName, String platformVersion, String deviceName) throws Exception{
         try{
             objBaseTest = new BaseTest();
-            objBaseTest.driverSetup(platformName,platformVersion,deviceName);
+            objBaseTest.driverSetup(emulator,udid,platformName,platformVersion,deviceName);
             String xmlFileName = "strings/string.xml";
             stringIS = getClass().getClassLoader().getResourceAsStream(xmlFileName);
             utils = new TestUtils();
@@ -69,5 +69,6 @@ public class EasyPaisaLoginPageTest {
         loginPage.enterMSISDN(msisdn.getJSONObject("validMSISDN").getString("msisdn"));
         dashboardPage = loginPage.clickOnProceedButton();
         objBaseTest.softAssert.assertAll();
+        System.out.println("");
     }
 }
