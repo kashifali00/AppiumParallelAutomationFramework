@@ -1,6 +1,9 @@
 # Compiled class file
 *.class
 
+# apps
+*.ipa
+
 # Log file
 *.log
 
