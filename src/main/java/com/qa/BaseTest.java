@@ -38,11 +38,14 @@ public class BaseTest {
         return appiumDrv;
     }
 
-    public void driverSetup(String platformName, String platformVersion, String deviceName) throws Exception{
+    public void driverSetup(String emulator,String udid, String platformName, String platformVersion, String deviceName) throws Exception{
             System.out.println("***** Executing BeforeTest method inside BaseTest Class *****");
             System.out.println("platformName "+"["+platformName+"]");
             System.out.println("platformVersion "+"["+platformVersion+"]");
             System.out.println("deviceName "+"["+deviceName+"]");
+            System.out.println("udid "+"["+udid+"]");
+            System.out.println("emulator "+"["+emulator+"]");
+
             cap = new DesiredCapabilities();
             props = new Properties();
             String propsFileName = "config.properties";
@@ -60,6 +63,9 @@ public class BaseTest {
                     cap.setCapability("app", androidAppURL.getAbsolutePath());
                     cap.setCapability("appPackage",props.getProperty("appPackage"));
                     cap.setCapability("appActivity",props.getProperty("appActivity"));
+                    if(emulator.equalsIgnoreCase("true")){
+                        cap.setCapability("avd", deviceName);
+                    }
                     cap.setCapability("newCommandTimeout", TestUtils.newCommandTimeoutWait);
                     cap.setCapability("appWaitDuration", TestUtils.appDurationTimeoutWait);
                     cap.setCapability("fullReset","true");
@@ -71,7 +77,7 @@ public class BaseTest {
                     cap.setCapability("automationName", props.getProperty("iOSAutomationName"));
                     cap.setCapability("app", iOSAppURL.getAbsolutePath());
                     cap.setCapability("bundleId",props.getProperty("appBundleId"));
-                    cap.setCapability("udid",props.getProperty("udid"));
+                    cap.setCapability("udid",udid);
                     appiumURL = new URL(props.getProperty("appiumServerURL"));
                     appiumDrv = new IOSDriver<MobileElement>(appiumURL, cap);
                     break;
@@ -107,6 +113,11 @@ public class BaseTest {
     public void Click(MobileElement el){
         System.out.println("*****  Executing Click method  *****");
             el.click();
+    }
+
+    public void clear(MobileElement el){
+        waitForVisibility(el);
+        el.clear();
     }
 
     public void Scroll(MobileElement el){
