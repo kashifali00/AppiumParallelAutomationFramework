@@ -11,6 +11,7 @@
             <parameter name="platformName" value="Android"/>
             <parameter name="platformVersion" value="10"/>
             <parameter name="deviceName" value="S10"/>
+            <parameter name="emulator" value="true"/>
 
             <class name="com.qa.tests.AutoScouteDashboardTest"/>
              <class name="com.qa.tests.LoginPageTest"/>
@@ -22,10 +23,11 @@
     <test verbose="1" name="appiumIOSTests" parallel="false">
         <classes>
             <!--Dashboard Tests-->
+            <parameter name="emulator" value="false"/>
+            <parameter name="udid" value= "00008020-0002586A1E12002E"/>
             <parameter name="platformName" value="iOS"/>
             <parameter name="platformVersion" value="13.7"/>
-            <parameter name="deviceName" value="Kashif's iPhone"/>
-
+            <parameter name="deviceName" value="Kashif"/>
             <class name="com.qa.tests.EasyPaisaLoginPageTest"/>
 
         </classes>
