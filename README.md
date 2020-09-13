@@ -103,6 +103,32 @@ following files should be build
 - Webdriveragentrunner
 - integrationApp
 
+## Compiling & building WebDriverAgent project in xcode
+
+- open the terminal and navigate to 
+
+`/Applications/Appium.app/Contents/Resources/app/node_modules/appium/node_modules/appium-webdriveragent`
+
+- Run the following commands on terminal
+
+` mkdir -p Resources/WebDriverAgent.bundle`
+` ./Script/bootstrap.sh -d`
+
+- Now open the WebDriverAgent.xcodeproj in xcode and perform the signing process using paid developer provisioning profiles with `Manage Automatic Signing` checkbox enabled
+for the following 
+
+- Webdriveragentlib
+- Webdriveragentrunner
+- integrationApp
+
+once the build is suceeded the open the terminal again and navigate to
+
+`/Applications/Appium.app/Contents/Resources/app/node_modules/appium/node_modules/appium-webdriveragent`
+
+and run the following command
+
+`xcodebuild -project WebDriverAgent.xcodeproj -scheme WebDriverAgentRunner -destination 'id=udid' test ` 
+
 just make sure you have developer paid account and perform code signing and provisioning using automatic configuration process
 Ask development team to invite your in IOS paid development program
 
