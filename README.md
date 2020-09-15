@@ -1,7 +1,88 @@
+#Appium parallel setup
+
+## Server side changes
+
+There are two ways to setup parallel setup
+- Single appium server
+- Multiple appium server
+
+Both options have their own disadvantages
+
+- Single appium server
+
+`Prons`
+
+It's easy to manage because we would have only one appium server
+It will only use one port
+
+`Cons`
+
+Loging is very cumbersome because different threads will writing the logs
+
+- Multiple appium server
+
+`cons`
+
+It's difficult to manage beccause we will be running different appium server for each device
+Need to specify the unique ports for each server setup
+
+`prons`
+
+Loging is very easy
+
+
+`` We can only run max 4 devices at a time using single machine, if we want to run on 
+   8 devices, we need to setup 2 machine running appium server for 16 devices, we need 3 machine running appium server
+``
+
+## Client side changes
+### Android Mandatory caps
+
+- udid `to uniquely identify the devices or emulator`
+- System port `capibility to set different port for each thread
+               This port is used to communicate with UiAutomatorDriver` 
+- chromeDriverPort `if we want to automate webview such as web app not the native app, to launch the browser on different port`
+
+### IOS Mandatory caps
+
+- udid
+- platformVersion & deviceName (Emulator only)
+- wdaLocalPort `set different port number for each thread, this port is used to communicate with WebDriverAgent Driver`
+- webkitDebugProxyPort `for webview safari browser`
+- derivedDataPath `this will help to avoid possible conflict and to speedup the parallel execution simulator only`
+
+
+### Thread Safety
+
+- Use thread local for driver object and other global objects
+- All objects in static method should be initialized locally to the method
+  meaning method should not contain any global variable
+- User constructor or if using TestNG using annotated method to pass value between objects  
+- Use `Synchronization` to allow only one thread at a time access to objects or entire method
+  when you fear of any race condition otherwise don't use `synchronization` because its slow down the execution
+  
+### Different level of parallel test execution TestNG
+
+- Test Level 
+
+ 1. It will execute all test on each devices.
+ 2. Driver can be initialized at class, test or even method level
+ 3. Preffered option to achieve max coverage
+ 
+- Class level
+
+ 1. It will execute each class atleast once on each connected device
+ 2. Driver can be initialized at class or method level
+ 
+- Method level
+
+ 1. It will execute each method atleast once on each device
+ 2. Driver can only be initialized at method level
+
 # AppiumParallelAutomationFramework
 This repo contain appium framework using parallel technique for both android and ios in a single framework
 ## Appium Setup on MAC for Android
-1. install homebrew ( package manager for macOS and is used to install software packages
+1. install home brew ( package manager for macOS and is used to install software packages
 2. Install appium ( either through npm or appium desktop)
 NPM:
 `npm install - g appium`
