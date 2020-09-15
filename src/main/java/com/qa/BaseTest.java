@@ -130,6 +130,14 @@ public class BaseTest {
         }
     }
 
+    public void closeApp(){
+        ((InteractsWithApps)appiumDrv).closeApp();
+    }
+
+    public void launchApp(){
+        ((InteractsWithApps)appiumDrv).launchApp();
+    }
+
     public void SendKeys(MobileElement el, String str){
         waitForVisibility(el);
         el.sendKeys(str);
