@@ -56,7 +56,7 @@ public class AutoScouteDashboardTest  {
 
     @Test
     public void clickOnNavigateButtonOnDashboard(){
-            objBaseClass.softAssert.assertEquals(dashBoard.isNavigateButtonVisible("content-desc"), "Navigate up");
+            objBaseClass.softAssert.assertEquals(dashBoard.isNavigateButtonVisible("content-desc"), "Navigate upp");
             loginPage = dashBoard.clickOnNavigateUpButton();
             objBaseClass.softAssert.assertEquals(loginPage.getLoginButtonText("text"), stringHashMap.get("login_button_text"));
             objBaseClass.softAssert.assertAll();

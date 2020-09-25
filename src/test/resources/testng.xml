@@ -7,17 +7,18 @@
     <test verbose="1" name="appiumAndroidTests" parallel="false">
         <classes>
 
-            <parameter name="emulator" value="true"/>
+            <parameter name="emulator" value="false"/>
             <parameter name="udid" value= "00008020-0002586A1E12002E"/>
             <parameter name="platformName" value="Android"/>
             <parameter name="platformVersion" value="10"/>
-            <parameter name="deviceName" value="android10"/>
+            <parameter name="deviceName" value="S10"/>
 
 
             <class name="com.qa.tests.AutoScouteDashboardTest"/>
+            <!--
              <class name="com.qa.tests.LoginPageTest"/>
             <class name="com.qa.tests.LogoutTest"/>
-
+-->
         </classes>
     </test>
 

@@ -16,13 +16,13 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 public class BaseTest {
-    protected  static AppiumDriver<MobileElement> appiumDrv;
-    protected  DesiredCapabilities cap;
-    protected  static Properties props;
+
+    // Make all the global variables threadlocal
+
+    protected  static AppiumDriver appiumDrv;
+    protected  static Properties props = new Properties();
     public SoftAssert softAssert = new SoftAssert();
-    InputStream inputStream;
-    URL appiumURL;
-    File androidAppURL,iOSAppURL;
+    Properties prop = new Properties();
 
 
     // Constructor used here to initialize the page factory class
@@ -30,7 +30,7 @@ public class BaseTest {
     }
 
     public void setDriver(AppiumDriver appiumDrv){
-        this.appiumDrv = appiumDrv;
+     this.appiumDrv = appiumDrv;
 
     }
 
@@ -46,8 +46,11 @@ public class BaseTest {
             System.out.println("udid "+"["+udid+"]");
             System.out.println("emulator "+"["+emulator+"]");
 
-            cap = new DesiredCapabilities();
-            props = new Properties();
+            DesiredCapabilities cap = new DesiredCapabilities();
+
+            URL appiumURL;
+            File androidAppURL,iOSAppURL;
+            InputStream inputStream;
             String propsFileName = "config.properties";
             inputStream = getClass().getClassLoader().getResourceAsStream(propsFileName);
             props.load(inputStream);
@@ -161,7 +164,6 @@ public class BaseTest {
     public void driverTearDown () throws Exception{
             System.out.println("***** Executing AfterTest method inside BaseTest Class *****");
             appiumDrv.quit();
-            inputStream.close();
 
     }
 }

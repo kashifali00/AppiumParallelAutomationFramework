@@ -10,6 +10,7 @@
 # Ingore Directory
 
 /target/**
+/Screenshots/**
 
 # BlueJ files
 *.ctxt
